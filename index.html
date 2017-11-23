@@ -10,12 +10,24 @@
   </style>
 </head>
 <body>
-  <canvas></canvas>
+  <canvas id="canvas"></canvas>
   <script>
-    var canvas=document.getElemetById("canvas");
-    var context=canvas.getElemte("2d");
+    var canvas=document.getElementById("canvas");
+    var context=canvas.getContext("2d");
     canvas.style.width=window.innerWidth;
     canvas.style.height=window.innerHeight;
+    var rAltura=100;
+    var rAncho=20;
+    function raqueta(x,y,ancho,alto){
+      this.x=x;
+      this.y=y;
+      this.ancho=ancho;
+      this.alto=alto;
+      this.dibujar=function() {
+        context.fillStyle="black";
+        context.fillRect(this.x,this.y,this.ancho,this.alto)
+      }
+    }
   </script>
 </body>
 </html>
