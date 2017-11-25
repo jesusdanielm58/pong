@@ -7,6 +7,10 @@
     canvas {
       background-color:grey;
     }
+    body {
+      margin: 0 auto;
+      overflow: hidden;
+    }
   </style>
 </head>
 <body>
@@ -14,8 +18,8 @@
   <script>
     var canvas=document.getElementById("canvas");
     var context=canvas.getContext("2d");
-    canvas.style.width=window.innerWidth;
-    canvas.style.height=window.innerHeight;
+    canvas.style.width=window.innerWidth+"px";
+    canvas.style.height=window.innerHeight+"px";
     var rAltura=100;
     var rAncho=20;
     function raqueta(x,y,ancho,alto){
