@@ -14,24 +14,46 @@
   </style>
 </head>
 <body>
-  <canvas id="canvas"></canvas>
+  <canvas id="can"></canvas>
   <script>
-    var canvas=document.getElementById("canvas");
+    var canvas=document.getElementById("can");
     var context=canvas.getContext("2d");
-    canvas.style.width=window.innerWidth+"px";
-    canvas.style.height=window.innerHeight+"px";
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
     var rAltura=100;
     var rAncho=20;
+    var tecla=[];
+    var raqueta1=new raqueta(0,(window.innerHeight-rAltura)/2,rAncho,rAltura);
+    var raqueta2=new raqueta(window.innerWidth-rAncho,(window.innerHeight-rAltura)/2,rAncho,rAltura);
     function raqueta(x,y,ancho,alto){
       this.x=x;
       this.y=y;
       this.ancho=ancho;
       this.alto=alto;
       this.dibujar=function() {
+        if(this.y+this.alto>canvas.height){this.y=canvas.height-this.alto}
+        if(this.y<0){this.y=0;}
         context.fillStyle="black";
-        context.fillRect(this.x,this.y,this.ancho,this.alto)
+        context.fillRect(this.x,this.y,this.ancho,this.alto);
       }
     }
+    function actualizar(){
+      if (tecla[37]) {raqueta1.y-=10}
+      if (tecla[39]) {raqueta1.y+=10}
+      if (tecla[38]) {raqueta2.y-=10}
+      if (tecla[40]) {raqueta2.y+=10}
+      context.clearRect(0,0,canvas.width,canvas.height)
+      raqueta1.dibujar();
+      raqueta2.dibujar();
+      window.requestAnimationFrame(actualizar)
+      }
+    window.addEventListener('keydown',function(e){
+      tecla[e.keyCode]=e.keyCode;
+    })
+    window.addEventListener('keyup',function(e){
+      tecla[e.keyCode]=false;
+    })
+    window.requestAnimationFrame(actualizar)
   </script>
 </body>
 </html>
