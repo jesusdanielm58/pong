@@ -25,6 +25,26 @@
     var tecla=[];
     var raqueta1=new raqueta(0,(window.innerHeight-rAltura)/2,rAncho,rAltura);
     var raqueta2=new raqueta(window.innerWidth-rAncho,(window.innerHeight-rAltura)/2,rAncho,rAltura);
+    var pelota={
+      radio:10,
+      x:canvas.width/2,
+      y:canvas.height/2,
+      velocidadx:signoAleatorio(aleatorio(10,5)),
+      velocidady:signoAleatorio(aleatorio(10,5)),
+
+      dibujar:function(){
+        pelota.x+=pelota.velocidadx;
+        pelota.y+=pelota.velocidady;
+        if (pelota.y+pelota.radio<0){pelota.y=pelota.radio;pelota.velocidady*=-1}
+        if (pelota.y-pelota.radio>canvas.height){pelota.y=canvas.height-pelota.radio;pelota.velocidady*=-1}
+        if (pelota.x+pelota.radio<0){pelota.x=canvas.width/2;pelota.y=canvas.height/2}
+        if (pelota.x-pelota.radio>canvas.width){pelota.x=canvas.width/2;pelota.y=canvas.height/2}
+        context.beginPath()
+        context.arc(pelota.x,pelota.y,pelota.radio,0,2*Math.PI);
+        context.fill();
+        context.closePath();
+      }
+    }
     function raqueta(x,y,ancho,alto){
       this.x=x;
       this.y=y;
@@ -38,6 +58,7 @@
       }
     }
     function actualizar(){
+      context.clearRect(0,0,canvas.width,canvas.height)
       if (tecla[37]) {raqueta1.y-=10}
       if (tecla[39]) {raqueta1.y+=10}
       if (tecla[38]) {raqueta2.y-=10}
@@ -45,7 +66,19 @@
       context.clearRect(0,0,canvas.width,canvas.height)
       raqueta1.dibujar();
       raqueta2.dibujar();
+      pelota.dibujar();
       window.requestAnimationFrame(actualizar)
+      }
+
+      function aleatorio(maximo,minimo){
+        if (minimo===undefined){minimo=0;}
+        return Math.floor(Math.random()*(maximo-minimo))+minimo;
+      }
+      function signoAleatorio(numero){
+        if (Math.random()>0.5){
+          numero*=-1
+        }
+        return numero
       }
     window.addEventListener('keydown',function(e){
       tecla[e.keyCode]=e.keyCode;
