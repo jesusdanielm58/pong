@@ -64,6 +64,7 @@
       if (tecla[38]) {raqueta2.y-=10}
       if (tecla[40]) {raqueta2.y+=10}
       context.clearRect(0,0,canvas.width,canvas.height)
+      rebote()
       raqueta1.dibujar();
       raqueta2.dibujar();
       pelota.dibujar();
@@ -80,6 +81,17 @@
         }
         return numero
       }
+      function rebote(){
+        if ((pelota.x-pelota.radio>=raqueta1.x && pelota.x-pelota.radio<=raqueta1.x+raqueta1.ancho) &&
+          (pelota.y-pelota.radio>=raqueta1.y && pelota.y-pelota.radio<=raqueta1.y+raqueta1.alto)){
+          pelota.x=raqueta1.x+raqueta1.ancho+pelota.radio;
+          pelota.velocidadx*=-1;
+        }else if((pelota.x+pelota.radio>=raqueta2.x && pelota.x-pelota.radio<=raqueta2.x+raqueta2.ancho) &&
+          (pelota.y-pelota.radio>=raqueta2.y && pelota.y-pelota.radio<=raqueta2.y+raqueta2.alto)){
+          pelota.x=raqueta2.x-pelota.radio;
+          pelota.velocidadx*=-1;
+        }
+  }
     window.addEventListener('keydown',function(e){
       tecla[e.keyCode]=e.keyCode;
     })
